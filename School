@@ -1,0 +1,51 @@
+public class School {
+
+    public static void main(String[] args) {
+        Student student = new Student("Alice");
+
+        // Valid grade
+        try {
+            assignGrade(student, 85);
+            System.out.println("Grade assigned successfully!");
+        } catch (IllegalArgumentException e) {
+            // This block won't be executed for valid grade
+        } finally {
+            System.out.println("Grade assignment attempted for student: " + student.getName());
+        }
+
+        // Invalid grade
+        try {
+            assignGrade(student, -10);
+            System.out.println("Grade assigned successfully!"); // This won't be printed
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: Invalid grade provided. Grade must be between 0 and 100.");
+        } finally {
+            System.out.println("Grade assignment attempted for student: " + student.getName());
+        }
+    }
+
+    public static void assignGrade(Student student, int grade) throws IllegalArgumentException {
+        if (grade < 0 || grade > 100) {
+            throw new IllegalArgumentException("Invalid grade: " + grade);
+        }
+        student.addGrade(grade);
+    }
+}
+
+class Student {
+    private String name;
+    private List<Integer> grades;
+
+    public Student(String name) {
+        this.name = name;
+        this.grades = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void addGrade(int grade) {
+        grades.add(grade);
+    }
+}
